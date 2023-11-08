@@ -43,6 +43,10 @@ function versionAvif() {
         .pipe( dest('build/img'))
 }
  
+function build() {
+    return series(imagenes, versionWebp, versionAvif, css);
+  }
+
 function dev() {
     watch( 'src/scss/**/*.scss', css );
     watch( 'src/img/**/*', imagenes );
@@ -53,7 +57,7 @@ exports.dev = dev;
 exports.imagenes = imagenes;
 exports.versionWebp = versionWebp;
 exports.versionAvif=versionAvif;
-exports.default = series(imagenes, versionWebp, versionAvif,css, dev);
+exports.build = build();
 
 //Series- Se inicia una tarea, y hasta que finaliza, inicia la siguiente
 // parallel-Todas inicial al mismo tiempo 
