@@ -26,6 +26,10 @@ function imagenes() {
         .pipe( dest('build/img') )
 }
  
+function copiarHTML() {
+    return src('src/html/*html')
+        .pipe(dest('build/'));
+  }
 function versionWebp() {
     const opciones = {
         quality: 50
@@ -43,9 +47,6 @@ function versionAvif() {
         .pipe( dest('build/img'))
 }
  
-function build() {
-    return series(imagenes, versionWebp, versionAvif, css);
-  }
 
 function dev() {
     watch( 'src/scss/**/*.scss', css );
@@ -57,7 +58,7 @@ exports.dev = dev;
 exports.imagenes = imagenes;
 exports.versionWebp = versionWebp;
 exports.versionAvif=versionAvif;
-exports.build = build();
 
+exports.default = series( imagenes, versionWebp, versionAvif, css, copiarHTML );
 //Series- Se inicia una tarea, y hasta que finaliza, inicia la siguiente
 // parallel-Todas inicial al mismo tiempo 
